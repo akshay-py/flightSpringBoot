@@ -1,19 +1,16 @@
 package com.akshay.flightreservation.entities;
 
-public class Reservation {
-	private Long id;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Reservation extends AbstractEntity {
 	private Boolean checkdIn;
 	private int numberOfBags;
+	@OneToOne
 	private Passenger passenger;
+	@OneToOne
 	private Flight flight;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Boolean getCheckdIn() {
 		return checkdIn;
