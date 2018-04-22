@@ -1,7 +1,9 @@
 package com.akshay.flightreservation.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.akshay.flightreservation.dto.ReservationRequest;
 import com.akshay.flightreservation.entities.Flight;
@@ -11,9 +13,14 @@ import com.akshay.flightreservation.repos.FlightRepository;
 import com.akshay.flightreservation.repos.PassengerRepository;
 import com.akshay.flightreservation.repos.ReservationRepository;
 import com.akshay.flightreservation.service.ReservationService;
+import com.akshay.flightreservation.util.EmailUtil;
+import com.akshay.flightreservation.util.PdfGenerator;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
+
+	@Value("${com.akshay.flightreservation.itinerary.dirpath}")
+	private String ITINERARY_DIR;
 
 	@Autowired
 	FlightRepository flightRepo;
@@ -24,7 +31,14 @@ public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	ReservationRepository reservationRepo;
 
+	@Autowired
+	PdfGenerator pdfGenerator;
+
+	@Autowired
+	EmailUtil emailUtil;
+
 	@Override
+	@Transactional
 	public Reservation bookFlight(ReservationRequest request) {
 		// Make Payment
 
@@ -42,7 +56,11 @@ public class ReservationServiceImpl implements ReservationService {
 		reservation.setFlight(flight);
 		reservation.setPassenger(savedPassenger);
 		reservation.setCheckdIn(false);
+
 		Reservation savedReservation = reservationRepo.save(reservation);
+		String filePath = ITINERARY_DIR + savedReservation.getId() + ".pdf";
+		pdfGenerator.generateItinerary(savedReservation, filePath);
+		emailUtil.sendItinerary(passenger.getEmail(), filePath);
 
 		return savedReservation;
 	}
