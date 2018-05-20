@@ -1,68 +1,68 @@
-CREATE DATABASE RESERVATION
+create database reservation
 
-USE RESERVATION
+use reservation
 
 
-CREATE TABLE USER 
+create table user 
 (
-ID INT NOT NULL AUTO_INCREMENT,
-FIRST_NAME VARCHAR(20),
-LAST_NAME VARCHAR(20),
-EMAIL VARCHAR(20),
-PASSWORD VARCHAR(256), 
-PRIMARY KEY (ID),
-UNIQUE KEY (EMAIL)
+id int not null auto_increment,
+first_name varchar(20),
+last_name varchar(20),
+email varchar(20),
+password varchar(256), 
+primary key (id),
+unique key (email)
 )
 
-CREATE TABLE FLIGHT
+create table flight
 (
-  ID INT  NOT NULL AUTO_INCREMENT,
-  FLIGHT_NUMBER VARCHAR(20)  NOT NULL, 
-  OPERATING_AIRLINES VARCHAR(20)  NOT NULL,
-  DEPARTURE_CITY VARCHAR(20)  NOT NULL,
-  ARRIVAL_CITY VARCHAR(20)  NOT NULL,
-  DATE_OF_DEPARTURE DATE  NOT NULL,
-  ESTIMATED_DEPARTURE_TIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
-  PRIMARY KEY (ID)
+  id int  not null auto_increment,
+  flight_number varchar(20)  not null, 
+  operating_airlines varchar(20)  not null,
+  departure_city varchar(20)  not null,
+  arrival_city varchar(20)  not null,
+  date_of_departure date  not null,
+  estimated_departure_time timestamp default current_timestamp,  
+  primary key (id)
 )
 
-CREATE TABLE PASSENGER
+create table passenger
 (
-  ID         INT NOT NULL AUTO_INCREMENT,
-  FIRST_NAME       VARCHAR(256),
-  LAST_NAME    VARCHAR(256),
-  MIDDLE_NAME   VARCHAR(256),
-  EMAIL VARCHAR(50),
-  PHONE VARCHAR(10),
-  PRIMARY KEY (ID)
+  id         int not null auto_increment,
+  first_name       varchar(256),
+  last_name    varchar(256),
+  middle_name   varchar(256),
+  email varchar(50),
+  phone varchar(10),
+  primary key (id)
 )
 
-CREATE TABLE RESERVATION
+create table reservation
 (
-  ID INT NOT NULL AUTO_INCREMENT,
-  CHECKED_IN TINYINT(1),
-  NUMBER_OF_BAGS INT,
-  PASSENGER_ID INT,
-  FLIGHT_ID INT,
-  CREATED TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (ID),
-  FOREIGN KEY (PASSENGER_ID) REFERENCES PASSENGER(ID) ON DELETE CASCADE,
-  FOREIGN KEY (FLIGHT_ID) REFERENCES FLIGHT(ID)
+  id int not null auto_increment,
+  checked_in tinyint(1),
+  number_of_bags int,
+  passenger_id int,
+  flight_id int,
+  created timestamp default current_timestamp,
+  primary key (id),
+  foreign key (passenger_id) references passenger(id) on delete cascade,
+  foreign key (flight_id) references flight(id)
 )
 
-SELECT * FROM USER
+select * from user
 
-SELECT * FROM PASSENGER 
+select * from passenger 
 
-SELECT * FROM FLIGHT
+select * from flight
 
-SELECT * FROM RESERVATION
+select * from reservation
 
 
 
-DROP TABLE USER
-DROP TABLE RESERVATION
-DROP TABLE PASSENGER
-DROP TABLE FLIGHT
+drop table user
+drop table reservation
+drop table passenger
+drop table flight
 
-DROP DATABASE RESERVATION
+drop database reservation
