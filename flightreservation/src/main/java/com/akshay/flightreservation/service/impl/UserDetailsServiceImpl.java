@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.akshay.flightreservation.entities.User;
 import com.akshay.flightreservation.repos.UserRepository;
 
@@ -20,7 +19,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found" + username);
 		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.getRoles());
+		return new org.springframework.security.core.userdetails.User(user.getEmail(),
+				user.getPassword(), user.getRoles());
 	}
 
 }

@@ -27,10 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(final HttpSecurity http) {
 		try {
-			http.authorizeRequests().antMatchers("/showReg", "/", "/index.html", "/registerUser", "/login", "/showLogin", "/login/*").permitAll().antMatchers("admin/*").hasAnyAuthority("ADMIN").anyRequest().authenticated().and().csrf().disable();
+			http.authorizeRequests()
+					.antMatchers("/showReg", "/", "/index.html", "/registerUser", "/login",
+							"/showLogin", "/login/*")
+					.permitAll().antMatchers("admin/*").hasAnyAuthority("ADMIN").anyRequest()
+					.authenticated().and().csrf().disable();
 		} catch (final Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 }
+
