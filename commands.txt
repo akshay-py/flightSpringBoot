@@ -1,0 +1,12 @@
+docker run -d \
+      -p 2012:3306 \
+     --name mysql-docker-container \
+     -e MYSQL_ROOT_PASSWORD=akshay \
+     -e MYSQL_DATABASE=reservation \
+     -e MYSQL_USER=akshay \
+     -e MYSQL_PASSWORD=akshay \
+        mysql:latest
+
+docker-machine ip
+
+

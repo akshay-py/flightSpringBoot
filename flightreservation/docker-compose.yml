@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  mysql-docker-container:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=akshay
+      - MYSQL_DATABASE=reservation
+      - MYSQL_USER=akshay
+      - MYSQL_PASSWORD=akshay
+    volumes:
+      - /data/mysql
+  flightreservation:
+    image: flightreservation-image
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-docker-container
+    ports:
+      - 8087:8080
+    volumes:
+      - /data/flightreservation
