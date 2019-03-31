@@ -11,7 +11,7 @@ services:
     volumes:
       - /data/mysql
   flightreservation:
-    image: flightreservation-image
+    image: flightreservation
     build:
       context: ./
       dockerfile: Dockerfile
