@@ -12,12 +12,12 @@ services:
     depends_on:
     - mysql-docker-container
     environment:
-      WAIT_HOSTS: mysql-docker-container:3306
+      WAIT_HOSTS: mysql-docker-container:3306, config-server:8888
       WAIT_HOSTS_TIMEOUT: 3000
   mysql-docker-container:
     image: mysql:latest
     ports:
-      - "3306:3306"
+    - 3306:3306
     build:
       context: ./
       dockerfile: mysql.dockerfile
@@ -26,4 +26,10 @@ services:
     - MYSQL_DATABASE=reservation
     - MYSQL_USER=akshay
     - MYSQL_PASSWORD=akshay
-    
+  config-server:
+    container_name: config-server
+    image: hyness/spring-cloud-config-server
+    ports:
+    - 8888:8888
+    environment:
+    - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/akshay-py/spring-config.git
