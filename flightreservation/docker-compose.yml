@@ -26,5 +26,4 @@ services:
     - MYSQL_DATABASE=reservation
     - MYSQL_USER=akshay
     - MYSQL_PASSWORD=akshay
-    volumes:
-    - /data/mysql
+    
