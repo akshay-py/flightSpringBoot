@@ -1,23 +1,30 @@
 version: '3'
-
 services:
-  mysql-docker-container:
-    image: mysql:latest
-    environment:
-      - MYSQL_ROOT_PASSWORD=akshay
-      - MYSQL_DATABASE=reservation
-      - MYSQL_USER=akshay
-      - MYSQL_PASSWORD=akshay
-    volumes:
-      - /data/mysql
   flightreservation:
     image: flightreservation
     build:
       context: ./
-      dockerfile: Dockerfile
-    depends_on:
-      - mysql-docker-container
+      dockerfile: flightreservation.dockerfile
     ports:
-      - 8087:8080
+    - 8087:8080
     volumes:
-      - /data/flightreservation
+    - /data/flightreservation
+    depends_on:
+    - mysql-docker-container
+    environment:
+      WAIT_HOSTS: mysql-docker-container:3306
+      WAIT_HOSTS_TIMEOUT: 3000
+  mysql-docker-container:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    build:
+      context: ./
+      dockerfile: mysql.dockerfile
+    environment:
+    - MYSQL_ROOT_PASSWORD=akshay
+    - MYSQL_DATABASE=reservation
+    - MYSQL_USER=akshay
+    - MYSQL_PASSWORD=akshay
+    volumes:
+    - /data/mysql

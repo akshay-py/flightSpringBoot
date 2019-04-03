@@ -9,4 +9,6 @@ docker run -d \
 
 docker-machine ip
 
+docker build -t flightreservation .
 
+docker run -t --name flightreservation-container --link mysql-docker-container:mysql -p 8087:8080 flightreservation
