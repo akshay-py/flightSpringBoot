@@ -4,7 +4,7 @@ services:
     image: flightreservation
     build:
       context: ./
-      dockerfile: flightreservation.dockerfile
+      dockerfile: ./dockerfiles/flightreservation/Dockerfile.flightreservation
     ports:
     - 8087:8080
     volumes:
@@ -14,18 +14,20 @@ services:
     environment:
       WAIT_HOSTS: mysql-docker-container:3306, config-server:8888
       WAIT_HOSTS_TIMEOUT: 3000
+  
   mysql-docker-container:
     image: mysql:latest
     ports:
     - 3306:3306
     build:
       context: ./
-      dockerfile: mysql.dockerfile
+      dockerfile: ./dockerfiles/mysql/Dockerfile.mysql
     environment:
     - MYSQL_ROOT_PASSWORD=akshay
     - MYSQL_DATABASE=reservation
     - MYSQL_USER=akshay
     - MYSQL_PASSWORD=akshay
+  
   config-server:
     container_name: config-server
     image: hyness/spring-cloud-config-server
